@@ -4,6 +4,7 @@ import fitz
 
 class PaperPdfExtract:
     def __init__(self, file_path):
+        self.name_max_length = 20
         self.ref_word = ['References', 'REFERENCES', 'referenCes']
         self.file_path = file_path
         self.ref_pages = self._get_ref_pages()
@@ -13,9 +14,9 @@ class PaperPdfExtract:
 
         self.ref_text = self._get_ref_text()
         self.split_ref_text = self._get_split_ref_text()
+        self.ref_num = len(self.split_ref_text)
         self.clean_split_ref_text = self._clean_str()
-
-        # ToDo: think how to retrieve
+        self.partial_ref_author = self._get_and_remove_partial_ref_author()
 
     def _get_ref_pages(self):
         pdf = fitz.open(self.file_path)
@@ -82,7 +83,34 @@ class PaperPdfExtract:
         return True
 
     def _clean_str(self):
-        return [s.replace('ﬁ', 'fi').replace('\n', ' ').rstrip() for s in self.split_ref_text]
+        ret = []
+
+        for s in self.split_ref_text:
+            ss = s.replace('ﬁ', 'fi').replace('\n', ' ').rstrip().lstrip()
+            ret.append(ss[ss.find(']') + 1:].lstrip())
+
+        return ret
+
+    def _get_and_remove_partial_ref_author(self):  # ToDo: fix None
+        ret = []
+
+        for i in range(len(self.clean_split_ref_text)):
+            rett = []
+
+            while True:
+                ff = self.clean_split_ref_text[i].find(',')
+                if ff == -1 or ff > self.name_max_length:
+                    break
+
+                rett.append(self.clean_split_ref_text[i][0:ff])
+                self.clean_split_ref_text[i] = self.clean_split_ref_text[i][ff + 1:].lstrip()
+
+            if len(rett) == 0:
+                ret.append(None)
+            else:
+                ret.append(rett)
+
+        return ret
 
 
 if __name__ == '__main__':
