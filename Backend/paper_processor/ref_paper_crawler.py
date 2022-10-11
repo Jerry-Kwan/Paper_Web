@@ -25,6 +25,9 @@ class RefPaperCrawler:
         self.ref_num = len(ref_list)
 
     def get_bib(self, no):
+        if self.ref_author_list[no - 1] is None:
+            return None
+
         # only use lower case chars to match
         ss = self._get_replaced_str(self.ref_list[no - 1]).lower()
         lenss = len(ss)
@@ -91,5 +94,5 @@ if __name__ == '__main__':
         ppe = PaperPdfExtract(test_path + name)
         rpc = RefPaperCrawler(ppe.partial_ref_author, ppe.clean_split_ref_text)
         print(rpc.get_bib(1))
-        print(rpc.get_bib(2))
+        print(rpc.get_bib(9))
         input('pause')
