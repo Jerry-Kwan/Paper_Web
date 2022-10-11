@@ -4,8 +4,8 @@ import fitz
 
 class PaperPdfExtract:
     def __init__(self, file_path):
-        self.name_max_length = 20
-        self.ref_word = ['References', 'REFERENCES', 'referenCes']
+        self.NAME_MAX_LENGTH = 20
+        self.REF_WORD = ['References', 'REFERENCES', 'referenCes']
         self.file_path = file_path
         self.ref_pages = self._get_ref_pages()
         if self.ref_pages is None:
@@ -27,7 +27,7 @@ class PaperPdfExtract:
             for pc in p.get_text('blocks'):
                 txt = pc[4]
 
-                for ref_word in self.ref_word:
+                for ref_word in self.REF_WORD:
                     if ref_word in txt:
                         ref_page_num = [i for i in range(num, page_num)]
 
@@ -40,7 +40,7 @@ class PaperPdfExtract:
 
     def _get_ref_text(self):
         for i, t in enumerate(self.ref_pages):
-            for word in self.ref_word:
+            for word in self.REF_WORD:
                 if word in t:
                     return self.ref_pages[i + 1:]
 
@@ -99,7 +99,7 @@ class PaperPdfExtract:
 
             while True:
                 ff = self.clean_split_ref_text[i].find(',')
-                if ff == -1 or ff > self.name_max_length:
+                if ff == -1 or ff > self.NAME_MAX_LENGTH:
                     break
 
                 rett.append(self.clean_split_ref_text[i][0:ff])
