@@ -1,4 +1,5 @@
 import os
+import copy
 import fitz
 
 
@@ -16,6 +17,7 @@ class PaperPdfExtract:
         self.split_ref_text = self._get_split_ref_text()
         self.ref_num = len(self.split_ref_text)
         self.clean_split_ref_text = self._clean_str()
+        self.display_ref = copy.deepcopy(self.clean_split_ref_text)
         self.partial_ref_author = self._get_and_remove_partial_ref_author()
 
     def _get_ref_pages(self):
@@ -122,3 +124,6 @@ if __name__ == '__main__':
             continue
 
         p = PaperPdfExtract(test_path + name)
+        print(p.clean_split_ref_text)
+        print(p.display_ref)
+        input('pause')

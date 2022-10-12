@@ -13,7 +13,7 @@
 
 <style scoped>
 #Header {
-    background:#F2F6FC;
+    background: #F2F6FC;
     padding: 20px 70px 20px 180px;
     margin: 0 auto;
 }
