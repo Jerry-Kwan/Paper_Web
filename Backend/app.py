@@ -1,4 +1,3 @@
-from enum import unique
 import os
 import shutil
 from flask import Flask, request, jsonify
@@ -32,9 +31,7 @@ def upload_and_analyze():
     ppe = pp.PaperPdfExtract(f_path)
     save_dict[uniqueId] = ppe
 
-    return jsonify({
-        'ref_list': ppe.display_ref
-    })
+    return jsonify({'ref_list': ppe.display_ref})
 
 
 # return bib
@@ -46,13 +43,9 @@ def get_bib():
     rpc = pp.RefPaperCrawler(ppe.partial_ref_author, ppe.clean_split_ref_text)
     ret = rpc.get_bib(no)
     if ret is None:
-        return jsonify({
-            'text': 'Not found'
-        })
+        return jsonify({'text': 'Not found'})
     else:
-        return jsonify({
-            'text': ret
-        })
+        return jsonify({'text': ret})
 
 
 if __name__ == "__main__":
