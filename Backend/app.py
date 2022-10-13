@@ -40,6 +40,8 @@ def get_bib():
     uniqueId = request.form.get('uniqueId')
     no = int(request.form.get('no'))
     ppe = save_dict[uniqueId]
+    print('no: ' + str(no))
+    print('ppe.ref_num: ' + str(ppe.ref_num))
     rpc = pp.RefPaperCrawler(ppe.partial_ref_author, ppe.clean_split_ref_text)
     ret = rpc.get_bib(no)
     if ret is None:

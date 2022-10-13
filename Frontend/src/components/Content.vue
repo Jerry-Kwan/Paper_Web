@@ -106,6 +106,7 @@ export default {
 
             param.append("uniqueId", this.uniqueId);
             param.append("no", currR.no);
+            console.log("currR.no: " + currR.no);
             alert('wait about 20 seconds');
 
             axios.post(this.server_url + "/bib", param, config).then(response => {
