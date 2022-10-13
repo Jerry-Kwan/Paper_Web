@@ -10,7 +10,7 @@ app = Flask(__name__)
 save_dict = {}
 
 
-# 添加header解决跨域
+# 添加 header 解决跨域
 @app.after_request
 def after_request(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
